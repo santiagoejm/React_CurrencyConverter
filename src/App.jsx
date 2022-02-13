@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import CurrencyRow from "./CurrencyRow";
 
-const BASE_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_KEY}`;
+const BASE_URL = `https://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_KEY}`;
 
 function App() {
   const [currencyOptions, setCurrencyOptions] = useState([]);
