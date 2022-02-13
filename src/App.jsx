@@ -15,10 +15,10 @@ function App() {
   let toAmount, fromAmount;
   if (amountInFromCurrency) {
     fromAmount = amount;
-    toAmount = amount * exchangeRate;
+    toAmount = (amount * exchangeRate).toPrecision(3);
   } else {
     toAmount = amount;
-    fromAmount = amount / exchangeRate;
+    fromAmount = (amount / exchangeRate).toPrecision(3);
   }
 
   useEffect(() => {
@@ -33,6 +33,14 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    if (fromCurrency != null && toCurrency != null) {
+      fetch(`${BASE_URL}&base=${fromCurrency}&symbols=${toCurrency}`)
+        .then((res) => res.json())
+        .then((data) => setExchangeRate(data.rates[toCurrency]));
+    }
+  }, [fromCurrency, toCurrency]);
+
   function handleFromAmountChange(e) {
     setAmount(e.target.value);
     setAmountInFromCurrency(true);
@@ -44,7 +52,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="app">
       <h1>Currency Converter</h1>
       <CurrencyRow
         currencyOptions={currencyOptions}
